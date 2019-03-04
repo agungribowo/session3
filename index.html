@@ -26,7 +26,7 @@
         <div class="col-sm-5">
                     <div class="form-inline">   
                         <label class="fs-20"><b> Search : </b></label> &nbsp;&nbsp;&nbsp;
-                        <input type="text" class="form-control fs-20" placeholder="Search name" id="myInput">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" class="form-control fs-20" placeholder="Search by Name" id="myInput">&nbsp;&nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn btn-danger fs-20" data-toggle="modal" data-target="#exampleModal" id="search">Search</button>
                     </div>                    
                 </div><br><br><br>
@@ -68,7 +68,7 @@
                 <div id="result"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                
+                <button type="button" class="btn btn-secondary" onclick="javascript:window.location.reload()" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -332,6 +332,7 @@ for (i = 0; i < data.results.length; i++) {
         var setResult = function() {
         var value = document.getElementById("myInput").value;
         var result = document.getElementById("result");
+                
         var resultFilter = data.results.filter(
         d => d.name.toLowerCase() === value.toLowerCase()
         );
