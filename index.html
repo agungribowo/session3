@@ -4,19 +4,79 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Excercise 3</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    
-    Name : <input type="text" id="myinput">
-    <button onclick="myfunction"> Search</button>
 
-    <table id="table">
+    <!-- Name : <input type="text" id="myInput"><button id="search">Search</button> -->
+<div class="limiter">
+    <div class="container-table100">        
+        <div class="col-sm-5">
+                    <div class="form-inline">   
+                        <label class="fs-20"><b> Search : </b></label> &nbsp;&nbsp;&nbsp;
+                        <input type="text" class="form-control fs-20" placeholder="Search name" id="myInput">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-danger fs-20" data-toggle="modal" data-target="#exampleModal" id="search">Search</button>
+                    </div>                    
+                </div><br><br><br>
+        <div class="wrap-table100">
+            <div class="table100">
+                
+                <table>
+                    <thead>
+                    <tr class="table100-head">
+                        <th>Name</th>
+                        <th>Rotate</th>
+                        <th>Orbit</th>
+                        <th>Diameter</th>
+                        <th>Climate</th>
+                        <th>Gravity</th>
+                        <th>Terrain</th>
+                        <th>Surface</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table">                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>            
+    <!-- <p><strong>RESULT</strong></p>
+    <div id="result"></div> -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Result</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="result"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
-    </table>
-
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         var data;
         data = {
@@ -244,21 +304,61 @@
                                     "url": "https://swapi.co/api/planets/11/"
                                 }
                             ]
-            }
+            };
+
+var tableDiv = document.getElementById("table");
+for (i = 0; i < data.results.length; i++) { 
+    var row=tableDiv.insertRow(-1); 
+    var cell1=row.insertCell(0); 
+    var cell2=row.insertCell(1);
+    var cell3=row.insertCell(2); 
+    var cell4=row.insertCell(3); 
+    var cell5=row.insertCell(4); 
+    var cell6=row.insertCell(5);
+    var cell7=row.insertCell(6); 
+    var cell8=row.insertCell(7); 
+    
+    cell1.innerHTML=data.results[i].name; 
+    cell2.innerHTML=data.results[i].rotation_period;
+    cell3.innerHTML=data.results[i].orbital_period; 
+    cell4.innerHTML=data.results[i].diameter; 
+    cell5.innerHTML=data.results[i].climate;
+    cell6.innerHTML=data.results[i].gravity; 
+    cell7.innerHTML=data.results[i].terrain; 
+    cell8.innerHTML=data.results[i].surface_water;
+    }
+
                        
-               var table = document.getElementById('table');
-               for(var i=0; i<data.results.length; i++){
-                   var row = table.insertRow(-1);
-
-                   var cell1 = row.insertCell(0);
-                   var cell2 = row.insertCell(1);
-
-                   cell1.innerHTML = data.results[i].name;
-                   cell2.innerHTML = data.results[i].diameter;
-               }
-
-        function myfunction       
+        var setResult = function() {
+        var value = document.getElementById("myInput").value;
+        var result = document.getElementById("result");
+        var resultFilter = data.results.filter(
+        d => d.name.toLowerCase() === value.toLowerCase()
+        );
+        result.innerHTML =
+        "<p>NAME : " +
+            resultFilter[0].name +
+            "</p><p>ROTATION PERIOD : " +
+            resultFilter[0].rotation_period +
+            "</p><p>ORBITAL PERIOD : " +
+            resultFilter[0].orbital_period +
+            "</p><p>DIAMETER : " +
+            resultFilter[0].diameter +
+            "</p><p>CLIMATE : " +
+            resultFilter[0].climate +
+            "</p><p>GRAVITY : " +
+            resultFilter[0].gravity +
+            "</p><p>TERRAIN : " +
+            resultFilter[0].terrain +
+            "</p><p>SURFACE WATER : " +
+            resultFilter[0].surface_water +
+            "</p>";
+        };
+        var btnSearch = document.getElementById("search");
+        btnSearch.onclick = setResult;
     </script>
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
